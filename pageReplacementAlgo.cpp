@@ -1,41 +1,58 @@
 #include <vector>
-#include<queue>
-#include <unordered_map>
-#include <unordered_set>
+#include "FIFO.cpp"
+#include "LeastRecentlyUsed.cpp"
+#include "OptimisedPageReplacement.cpp"
 using namespace std;
 class pageReplacementAlgo {
     private:
+        int frames;
         vector<int> referenceString;
+
     public:
-        pageReplacementAlgo(vector<int> referenceString) {
+        pageReplacementAlgo(int frames, vector<int> referenceString) {
+            this->frames = frames;
             this->referenceString = referenceString;
         }
-
-        int fifo(int frames) {
+    void print_cache(Node<int>* head) {
+            std::unordered_set<Node<int>*> visited;
+            while (head) {
+                if (visited.count(head)) {
+                    std::cout << "[Cycle Detected]" << std::endl;
+                    break;
+                }
+                visited.insert(head);
+                std::cout << head->data << " ";
+                head = head->next;
+            }
+            std::cout << std::endl;
+        }
+        void testFIFO() {
             int pageHit = 0;
-            queue<int> q;
-            unordered_set<int> set;
+            FIFO *f = new FIFO(frames);
 
             for (int curr : referenceString) {
-                if (set.contains(curr)) {
-                    pageHit++;
-                    continue;
-                }
-                if (q.size() < frames) {
-                    q.push(curr);
-                    set.insert(curr);
-                }
-                else {
-                    int replacement = q.front();
-                    q.pop();
-                    set.erase(replacement);
-
-                    q.push(curr);
-                    set.insert(curr);
-                }
+                if (f->fifo(curr)) pageHit++;
             }
-            return pageHit;
+            delete f;
+            cout<< "Page Hits: " << pageHit << endl;
         }
-    // optimal
-    // LRU
+
+    void testLRU() {
+            LeastRecentlyUsed lru(frames);
+            int pageHit = 0;
+            std::cout << "Simulating LRU with 3 frames:\n";
+
+            for (int page : referenceString) {
+                bool hit = lru.access(page);
+                if (hit) pageHit++;
+                std::cout << "Page " << page << ": " << (hit ? "HIT" : "MISS") << " -> Cache: ";
+                print_cache(lru.get_cache_head());
+            }
+            cout << "Page Hits: " << pageHit << endl;
+        }
+    void testOptimisedPage() {
+            int faults = optimalPageReplacement(referenceString, frames);
+            cout << "Page Hits (Optimal): " << faults << endl;
+        }
+
 };

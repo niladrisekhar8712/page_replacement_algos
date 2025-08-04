@@ -12,6 +12,3 @@ This repository contains implementations of various **Page Replacement Algorithm
 
 - **Optimal Page Replacement**  
   Replaces the page that will not be used for the longest time in the future. (Requires future knowledge, used as a benchmark.)
-
-- **LFU (Least Frequently Used)** _(Optional)_  
-  Replaces the page with the lowest frequency of accesses.

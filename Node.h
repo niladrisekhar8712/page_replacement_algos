@@ -1,7 +1,3 @@
-//
-// Created by Niladri on 18-Aug-25.
-//
-
 #ifndef NODE_H
 #define NODE_H
 
@@ -20,3 +16,4 @@ public:
 
 
 #endif //NODE_H
+

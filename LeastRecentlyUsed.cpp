@@ -1,5 +1,6 @@
 #include <unordered_map>
-#include "DoublyLinkedList.cpp"
+#include "DoublyLinkedList.h"
+#include "Node.h"
 
 class LeastRecentlyUsed {
 private:

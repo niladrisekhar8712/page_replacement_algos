@@ -4,4 +4,7 @@ project(page_replacement_algos)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(page_replacement_algos main.cpp
+        LeastFrequentlyUsed.cpp
+        DoublyLinkedList.h
+        Node.h
 )
